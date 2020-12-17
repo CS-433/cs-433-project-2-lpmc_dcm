@@ -710,6 +710,13 @@ def estimate(init_values,
 
     # Estimate the actual parameters of the model
     start_time = time.time()
+    """
+ ######################## MODIFIED LINES #################################
+ Defines the boundaries for lambdas parameters. Then these boundaries are 
+ given to 'Scipy minimize' to optimize the likelihood according to these
+ constraints.
+                 
+    """
     boundaries = []
     if ((not estimator.reduced) and (estimator.boxcox)): 
         
@@ -732,7 +739,9 @@ def estimate(init_values,
                     boundaries.append((1,1)) #for > 0
     elif(not estimator.boxcox):
         boundaries=None
-                
+    """
+ ######################## END MODIFIED LINES #################################                 
+    """               
         
         
     results = minimize(estimator.calc_neg_log_likelihood_and_neg_gradient,
