@@ -20,7 +20,7 @@ The code for this project is based on Python [pylogit](https://github.com/timoth
 This package is designed for "_performing maximum likelihood estimation of conditional logit models and similar discrete choice models_".
 
 #### Contributions to the initial code:
-As part of this project, we implemented Ridge and LASSO regularization methods, as well as Box-Cox tranformations.
+As part of this project, we implemented Ridge and LASSO regularization methods, as well as Box-Cox tranformations. The modified package is under the pylogit folder of this repository.
 
 * Regularization methods:
 	* added file `reg.py: L1() and L2()` methods.
