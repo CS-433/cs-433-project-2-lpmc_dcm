@@ -66,9 +66,8 @@ This file generates a choice model by creating an ordered dictionnary (`collecti
 
 This file perfoms a grid_search over $\lambda_R$ and $\lambda_L$ and stores the following results to be used in  `eval_regularization.py`:
 
-* The number of parameters $\beta$ pushed towards 0. More precisely those estimated below 1e-6, between 1e-4 and 1e-6, between 1e-2 and 1e-4 and above 1e-2.
-
-* The array of estimated (regularized) parameters.
+  * The number of parameters $\beta$ pushed towards 0. More precisely those estimated below 1e-6, between 1e-4 and 1e-6, between 1e-2 and 1e-4 and above 1e-2.
+  * The array of estimated (regularized) parameters.
 
   
 
