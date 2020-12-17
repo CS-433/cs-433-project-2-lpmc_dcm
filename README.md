@@ -6,15 +6,15 @@ _This is the README file for the project 2 of the ML course (CS-433) we did in c
 
 * Subject:
 
-* Regularized maximum likelihood estimation for discrete choice models.
+  * Regularized maximum likelihood estimation for discrete choice models.
 
 * Names:
 
-* Thomas Benchetrit: <thomas.benchetrit@epfl.ch>
+  * Thomas Benchetrit: <thomas.benchetrit@epfl.ch>
 
-* Romain Palazzo: <romain.palazzo@epfl.ch>
+  * Romain Palazzo: <romain.palazzo@epfl.ch>
 
-* Eliott Zemour: <eliott.zemour@epfl.ch>
+  * Eliott Zemour: <eliott.zemour@epfl.ch>
 
 * Supervisors (EPFL TRANSP-OR lab):
 
