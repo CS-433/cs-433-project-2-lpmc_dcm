@@ -43,27 +43,27 @@ As part of this project, we implemented Ridge and LASSO regularization methods, 
 
 * Regularization methods:
 
-* added file `reg.py: L1() and L2()` methods.
+  * added file `reg.py: L1() and L2()` methods.
 
-* modified files:
+  * modified files:
 
-* `choice_calcs.py`: `calc_probabilities(), [lines 144-189], calc_log_likelihood() [lines 349-364] and calc_gradient()[lines 472-615]`: The gradient for a $\lambda$ parameter is given by : A remplir. Entre crochet les lignes de modifications de chaque methode
+    * `choice_calcs.py`: `calc_probabilities(), [lines 144-189], calc_log_likelihood() [lines 349-364] and calc_gradient()[lines 472-615]`: The gradient for a $\lambda$ parameter is given by : A remplir. Entre crochet les lignes de modifications de chaque methode
 
-* `conditional_logit.py`: `fit_mle()` function now taking regularization hyperparameters $\lambda_R$ (`ridge`) and $\lambda_L$ (`lasso`) as arguments. These arguments are then passed to any method that needs them.
+    * `conditional_logit.py`: `fit_mle()` function now taking regularization hyperparameters $\lambda_R$ (`ridge`) and $\lambda_L$ (`lasso`) as arguments. These arguments are then passed to any method that needs them.
 
 * Box Cox transform:
 
-* use of Python [`scipy.special.boxcox()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox.html)
+  * use of Python [`scipy.special.boxcox()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox.html)
 
-* modified files
-
-  
-
-* `choice_calcs.py: calc_probabilities(), calc_log_likelihood() and calc_gradient()`: see comment lines.
+  * modified files
 
   
 
-* `estimation.py`: `estimate()` now specifies boundaries for boxcox parameters: $\lambda_{cox} \geq 0$. These constraints are then passed to [`scipy.optimize.minimize()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html). The minimization method is also changed from ['BFGS'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-bfgs.html#optimize-minimize-bfgs) to ['L-BFGS-B'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html#optimize-minimize-lbfgsb).
+    * `choice_calcs.py: calc_probabilities(), calc_log_likelihood() and calc_gradient()`: see comment lines.
+
+  
+
+    * `estimation.py`: `estimate()` now specifies boundaries for boxcox parameters: $\lambda_{cox} \geq 0$. These constraints are then passed to [`scipy.optimize.minimize()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html). The minimization method is also changed from ['BFGS'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-bfgs.html#optimize-minimize-bfgs) to ['L-BFGS-B'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html#optimize-minimize-lbfgsb).
 
 
 ##
