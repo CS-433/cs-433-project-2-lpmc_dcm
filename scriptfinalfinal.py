@@ -179,7 +179,7 @@ lassos=np.logspace(1,2,num_lasso)
 ridges=np.logspace(-1,2,num_ridge)
 
 betas_reg = np.ones((num_lasso, num_ridge, 483))
-likelihood = np.ones((num_lasso, num_ridge, num_points))
+likelihoodlr = np.ones((num_lasso, num_ridge, num_points))
 betas_sim = np.ones((num_lasso, num_ridge, num_points, 483))
 
 
@@ -194,20 +194,20 @@ for i in tqdm(range(num_lasso)):
                 index = helpers.generate_list(betas_reg[i,j,:],int(num_param_keep[k]))
                 tmp_sim = lpmc_mnltrain.fit_mle(init, maxiter=maxiter, boxcox=True, reduced=True, indd=index, just_point=True)
                 betas_sim[i,j,k,:] = tmp_sim.x
-                likelihood[i,j,k] = -1*tmp_sim["fun"]
+                likelihoodlr[i,j,k] = -1*tmp_sim["fun"]
         else:
             for k in tqdm(range(num_points-1)):
                 index = helpers.generate_list(betas_reg[i,j,:],int(num_param_keep[k]))
                 tmp_sim = lpmc_mnltrain.fit_mle(init, maxiter=maxiter, boxcox=True, reduced=True, indd=index, just_point=True)
                 betas_sim[i,j,k,:] = tmp_sim.x
-                likelihood[i,j,k] = -1*tmp_sim["fun"]
-            likelihood[i,j,num_points-1] = likelihood[0,0,num_points-1]
+                likelihoodlr[i,j,k] = -1*tmp_sim["fun"]
+            likelihoodlr[i,j,num_points-1] = likelihoodlr[0,0,num_points-1]
                     
 
 # Normalize ll
-likelihood=likelihood/(0.25*long_lpmc.shape[0])
+likelihoodlr=likelihoodlr/(0.25*long_lpmc.shape[0])
 
-sio.savemat("./likelihoodbothlassoridge.mat", mdict={'ll':likelihood})
+sio.savemat("./likelihoodbothlassoridge.mat", mdict={'ll':likelihoodlr})
 sio.savemat("./betaGridbothlassoridge.mat", mdict={'beta':betas_reg})
 sio.savemat("./betaPointbothlassoridge.mat", mdict={'beta':betas_sim})
 
@@ -244,12 +244,21 @@ likelihoodrand[len(seed),:]=np.mean(likelihoodrand[:len(seed)-1,:],axis=0)
 
 """
 Load and plot results
+Variable : 
+    likelihoodend = final log likelihood computes is a maxiter=100 in order 
+                    with 483 parameters. Realised with a higher maxiter 
+                    because there is more parameters to optimize
 """
 
 likelihoodrand=likelihoodrand.drop(likelihoodrand.shape[0]-1)
-likelihoodr.loc[:,5]=-0.891829
-likelihoodl.loc[:,5]=-0.891829
-likelihoodrand.loc[:,5]=-0.891829
+finallikelihood = lpmc_mnltrain.fit_mle(init, maxiter=100, boxcox=True, just_point=True)
+betanormhist = finallikelihood.x
+likelihoodend = -1*finallikelihood["fun"]
+
+#likelihoodend=-0.891829
+likelihoodr.loc[:,5]=likelihoodend
+likelihoodl.loc[:,5]=likelihoodend
+likelihoodrand.loc[:,5]=likelihoodend
 
 x=num_param_keep
 
@@ -257,9 +266,7 @@ fig = plt.figure(1)
 ax = fig.add_subplot(1, 1, 1)  
 
 eli = sio.loadmat("./likelihoodbothlassoridge.mat")['ll']
-eli_2 = sio.loadmat("./likelihoodbothlassoridge_part2.mat")['ll']
-eli[2:,:,:] = eli_2
-likelihood_better = -0.8918298556231004 * np.ones((4, 4))
+likelihood_better = likelihoodend * np.ones((4, 4))
 eli[:,:,5] = likelihood_better
 
 num_points = 6
@@ -288,8 +295,8 @@ for j in range(likelihoodrand.shape[0]):
         plt.plot(num_param_keep,likelihoodrand.loc[j,:],'.',linestyle='-', color='black',label ='Averaged random')
     else :
         plt.plot(num_param_keep,likelihoodrand.loc[j,:],'.',color='grey', marker=None,linewidth=0.5,linestyle='-')
-plt.plot(num_param_keep,likelihoodl.iloc[3,:],'.',linestyle='-', label ='$\lambda_{L}=100$')
-plt.plot(num_param_keep,likelihoodr.loc[0,:],'.',linestyle='-', label ='$\lambda_{R}=10$')
+plt.plot(num_param_keep,likelihoodl[1,:],'.',linestyle='-', label ='$\lambda_{L}=100$')
+plt.plot(num_param_keep,likelihoodr[0,:],'.',linestyle='-', label ='$\lambda_{R}=10$')
 
 plt.grid(True,'major',linestyle='--',linewidth=0.5)
 plt.xlabel(r'Added $\beta$ parameters')
@@ -313,8 +320,8 @@ y = betagrid[i,j,:]
 fig2 = plt.figure(2)
 plt.hist(np.abs(y[:243]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),histtype='step',alpha=0.5,color='red',linewidth=2,label =  r'($\lambda_L,\lambda_R$)=({1}, {0})'.format(lmda_ridge, lmda_lasso))
 plt.hist(np.abs(betanormhist.loc[:243,0]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),alpha=1,linewidth=1.5,color='orange',label =r'\noindent Non regularized\\distribution')
-plt.hist(np.abs(betaRr.loc[:243,10]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),histtype='step',alpha=1,linewidth=1.5,color='blue',label = r'$\lambda_{R}=10$')
-plt.hist(np.abs(betaRl[:243]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),alpha=0.5,color='green',label = r'$\lambda_{L}=100$')
+plt.hist(np.abs(betasRr[:243,0]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),histtype='step',alpha=1,linewidth=1.5,color='blue',label = r'$\lambda_{R}=10$')
+plt.hist(np.abs(betasRl[:243,1]),bins=10**np.linspace(np.log10(1e-6), np.log10(10),50),alpha=0.5,color='green',label = r'$\lambda_{L}=100$')
 
 
 plt.grid(True,'major',linestyle='--',linewidth=0.5)
