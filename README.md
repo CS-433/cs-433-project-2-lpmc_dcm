@@ -51,26 +51,21 @@ As part of this project, we implemented Ridge and LASSO regularization methods, 
 #### How to use
 
 * __Create long format data: `create_large_data.py`__
-
-This file allows us to convert the original LPMC data to long format, and proceed to segmentation w.r.t gender, age, season, travel purpose.
+  This file allows us to convert the original LPMC data to long format, and proceed to segmentation w.r.t gender, age, season, travel purpose.
 
   
 
 * __Compute the parameter estimates for a given model (specification): `main.py`__
-
-This file generates a choice model by creating an ordered dictionnary (`collections.OrderedDict`) through the `create_specification.py` file. This dictionnary will determine the functionnal form of the utility functions. Then,  `conditional_logit.fit_mle()` is called to perform the maximum likelihood estimation and returns the final log-likelihood $\mathcal{L}(\hat{\beta})$, as well as the parameters estimates $\hat{\beta}$.
+  This file generates a choice model by creating an ordered dictionnary (`collections.OrderedDict`) through the `create_specification.py` file. This dictionnary will determine the functionnal form of the utility functions. Then,  `conditional_logit.fit_mle()` is called to perform the maximum likelihood estimation and returns the final log-likelihood $\mathcal{L}(\hat{\beta})$, as well as the parameters estimates $\hat{\beta}$.
 
   
 
 * __Perform the grid search over regularization hyperparameters: `grid_search.py`__
-
-This file perfoms a grid_search over $\lambda_R$ and $\lambda_L$ and stores the following results to be used in  `eval_regularization.py`:
-
+  This file perfoms a grid_search over $\lambda_R$ and $\lambda_L$ and stores the following results to be used in  `eval_regularization.py`:
   * The number of parameters $\beta$ pushed towards 0. More precisely those estimated below 1e-6, between 1e-4 and 1e-6, between 1e-2 and 1e-4 and above 1e-2.
   * The array of estimated (regularized) parameters.
 
   
 
 * __Evaluate the regularization results and compare the hyperparameters combination of the grid search: `eval_regularization.py`__
-
-This file compares the efficiency of regularization hyperparameters and plots the log-likelihod in terms of the number of added parameters. This is allowed by passing an index list to `fit_mle()` through the argument `keep_ind`.
+  This file compares the efficiency of regularization hyperparameters and plots the log-likelihod in terms of the number of added parameters. This is allowed by passing an index list to `fit_mle()` through the argument `keep_ind`.
