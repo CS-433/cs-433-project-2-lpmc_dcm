@@ -14,6 +14,7 @@ _This is the README file for the project 2 of the ML course (CS-433) we did in c
 The dataset used is London Passenger Mode Choice (LPMC) revealed-preference data. A description of the features can be found [here](https://transp-or.epfl.ch/documents/technicalReports/CS_LPMC.pdf).
 Full details of the framework, dataset, and the models it was used to develop are given in Hillel et al. (2018): [https://doi.org/10.1680/jsmic.17.00018](https://doi.org/10.1680/jsmic.17.00018).
 
+##
 #### Pylogit package:
 The code for this project is based on Python [pylogit](https://github.com/timothyb0912/pylogit) package by [Timothy Brathwaite](https://github.com/timothyb0912).
 This package is designed for "_performing maximum likelihood estimation of conditional logit models and similar discrete choice models_".
@@ -35,6 +36,7 @@ As part of this project, we implemented Ridge and LASSO regularization methods, 
 
         	* `estimation.py`: `estimate()` now specifies boundaries for boxcox parameters: $\lambda_{cox} \geq 0$. These constraints are then passed to [`scipy.optimize.minimize()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html). The minimization method is also changed from ['BFGS'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-bfgs.html#optimize-minimize-bfgs) to ['L-BFGS-B'](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html#optimize-minimize-lbfgsb).
 
+##
 #### How to use
 * __Create long format data: `create_large_data.py`__
 This file allows us to convert the original LPMC data to long format, and proceed to segmentation w.r.t gender, age, season, travel purpose.
